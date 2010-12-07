@@ -1,4 +1,18 @@
 layout: "main"
-logger: "file"
+logger: "console"
+cache: 1
+template: "template_toolkit"
+charset: "utf8"
 appname: "test_task"
-
+plugins: 
+    Database:
+        driver: "mysql"
+        database: "test"
+        host: "localhost"
+        username: "test"
+        password: "test"
+        connectivity-check-threshhold: 10
+        dbi_params:
+            RaiseError: 1
+            AutoCommit: 1
+        on_connect_do: [ "SET NAMES 'utf8'", "SET CHARACTER SET 'utf8'" ]
