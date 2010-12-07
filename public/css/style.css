@@ -1,0 +1,133 @@
+html, body {
+    font-family: Lucida,sans-serif;
+    color: #eee;
+    background-color: #1f1b1a;
+}
+
+#container {
+    /* height: 500px; */
+    background: #708090;/* url('/images/dancer.png') no-repeat bottom left; */
+    min-height: 100%;
+    height: auto !important;
+    height: 50%;
+/*    margin: 0 auto -4em; */
+}
+
+/* page's small sheet */
+#content {
+    /* background: #fff url('/images/dancer-content-bg.png') no-repeat top right; */
+	background-color: #fff;
+    border-right: 4px solid #fff;
+    border-left: 6px solid #ffa500;
+    color: #444;
+    margin-left: 20px;
+    margin-right: 160px;
+    padding-left: 10px;
+    padding-top: 8px;
+    padding-bottom: 2em;
+    min-height: 160px;
+}
+
+/*
+#content {
+    color: #000;
+    background-color: #eee;
+    padding: 1em;
+    margin: 1em;
+    padding-top: 0.5em;
+}
+*/
+
+a {
+    color: #a5ec02;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+#menu {
+    position: absolute;
+    right: 10px;
+    margin-top: 10px;
+    margin-right: 8px;
+    /*top: 50px;*/
+    height: auto !important;
+    height: 50%;
+}
+
+#menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* style of the text in element of the main menu */
+#menu ul li a {
+    text-decoration: none;
+    display: block;
+    color: #3c516e;
+}
+
+/* it's highlits element of the menu then you focusing on it */
+#menu ul li:hover {
+    background-color: #ffa500;
+    color: #3c516e;
+    border-left:3px solid #fff;
+}
+
+
+/* style of the element of the main menu*/
+#menu ul li {
+    margin-bottom: 4px;
+    border-left:3px solid #ffa500;
+    margin-left: 5px;
+    padding-left: 4px;
+    background-color: #eee;
+    font-size:20px;
+    letter-spacing:3px;
+    line-height:1.25;
+    text-transform:uppercase;
+}
+
+/* I do not know about next two params */
+#menu div a {
+    color: #eee;
+}
+
+#menu div {
+font-family: sans-serif;
+    color: #ddd;
+    margin: 1em;
+}
+
+h1 {
+    color: #ffa500;
+}
+
+#footer {
+    height: 28px;
+}
+
+/* k.o. says that is the style of the footer */
+#footer {
+    background: #708090;
+    border-top: 3px solid #666;
+
+/*  margin-top: 100px; */
+    padding-top: 2px;
+
+    font-family:sans-serif;
+    font-size: 12px;
+    color: #555;
+    text-align: center;
+}
+
+#footer a {
+    color: #99b;
+}
+
+pre {
+    font-family: \"lucida console\",\"monaco\",\"andale mono\",\"bitstream vera sans mono\",\"consolas\",monospace;
+}
+
