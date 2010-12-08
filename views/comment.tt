@@ -1,5 +1,11 @@
-<h2>Commemts</h2>
+<h2>Commemt</h2>
 
 <div id="comment">
-I'm in <code>/home/sugar/Documents/perl/sandbox/test_task/test_task/views/index.tt</code>
+<form action="<% comment_url %>" method=post>
+    <dl>
+        <dt>Username:</dt>
+        <dd><input type=text name=username /></dd>
+        <dt>Comment:</dt>
+        <dd><textarea name=text rows=5 cols=40></textarea></dd>
+        <dd><input type=submit value=comment /></dd>
 </div>

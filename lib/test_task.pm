@@ -30,7 +30,16 @@ get '/error' => sub {
 };
 
 get '/comment' => sub {
-    template 'comment';
+    template 'comment', {
+        comment_url => uri_for("/comment"),
+    };
+
 };
+
+#before_template sub {
+#    my $tokens = shift;
+#
+#    $tokens->{"comment_url"} = uri_for( "/comment" );
+#};
 
 true;
