@@ -4,6 +4,8 @@ cache: 1
 template: "template_toolkit"
 charset: "utf8"
 appname: "test_task"
+environment: "development"
+session: "simple"
 plugins: 
     Database:
         driver: "mysql"
