@@ -1,8 +1,31 @@
 html, body {
     font-family: Lucida,sans-serif;
     color: #eee;
-    background-color: #1f1b1a;
+    background-color: #001b1a;
 }
+
+#post_comment {
+	background-color: #eee;
+    border-right: 4px solid #eee;
+    border-left: 4px solid #ffa500;
+    color: #444;
+    margin-left: 20px;
+    margin-right: 160px;
+    padding-left: 10px;
+    padding-top: 2px;
+    padding-bottom: 1px;
+    min-height: 12px;
+}
+
+
+#post_comment a {
+    color: #444;
+    text-decoration: none;
+    padding-left: 20px;
+    display: block;
+    color: #3c516e;
+}
+
 
 #container {
     /* height: 500px; */
@@ -16,9 +39,9 @@ html, body {
 /* page's small sheet */
 #content {
     /* background: #fff url('/images/dancer-content-bg.png') no-repeat top right; */
-	background-color: #fff;
-    border-right: 4px solid #fff;
-    border-left: 6px solid #ffa500;
+	background-color: #eee;
+    border-right: 4px solid #eee;
+    border-left: 4px solid #ffa500;
     color: #444;
     margin-left: 20px;
     margin-right: 160px;
@@ -37,6 +60,12 @@ html, body {
     padding-top: 0.5em;
 }
 */
+    
+
+
+tr.even {
+    background-color: #bbb
+}
 
 a {
     color: #a5ec02;
@@ -74,19 +103,26 @@ a:hover {
     background-color: #ffa500;
     color: #3c516e;
     border-right:3px solid #fff;
+    border-left:3px solid #fff;
+    border-top:2px solid #fff;
+    border-bottom:2px solid #fff;
 }
 
 
 /* style of the element of the main menu*/
 #menu ul li {
-    margin-bottom: 4px;
+    margin-bottom: 6px;
     border-right:3px solid #ffa500;
-    margin-left: 5px;
+    border-left:3px solid #ffa500;
+    border-top:2px solid #3c516e;
+    border-bottom:2px solid #3c615e;
     padding-left: 4px;
+    margin-right: 5px;
+    padding-right: 8px;
     background-color: #eee;
     font-size:20px;
-    letter-spacing:3px;
-    line-height:1.25;
+    letter-spacing:1px;
+    line-height:1.1;
     text-transform:uppercase;
 }
 
@@ -131,3 +167,10 @@ pre {
     font-family: \"lucida console\",\"monaco\",\"andale mono\",\"bitstream vera sans mono\",\"consolas\",monospace;
 }
 
+hr {
+    color: #A6A6A6
+    height: 0px;
+    border-style: solid;
+    border-width: 1px 0 0;
+    clear: both;
+}

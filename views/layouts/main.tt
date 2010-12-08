@@ -29,7 +29,13 @@
   <div id="content">
     <% content %>
   </div>
+  <div id="post_comment">
+      <hr />  
+    <a href="/comment">comment this</a>
+      <hr />  
+  </div>
 </div>
+
 
 <div id="footer">
   Powered by <a href="http://perldancer.org/">Dancer</a> 1.2002
