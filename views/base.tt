@@ -1,0 +1,26 @@
+<h2>Раздел в разработке</h2>
+<ul class=records>
+<% IF records.size %>
+    <table border=1>
+    <% count = 1 %>
+
+    <% FOREACH id IN records.keys.nsort %>
+        <% IF (count mod 2) %>
+            <% value="even" %>
+        <% ELSE %>
+            <% value="odd" %>
+        <% END %>
+        <tr class="<% value %>">
+        <td><% even %></td>
+        <td><% records.$id.id %></td>
+        <td><% records.$id.title %></td>
+        <td><% records.$id.text %></td>
+        </tr>
+        <% count = count + 1 %>
+    <% END %>
+    </table>
+<% ELSE %>
+    <li><em>Unbelievable.  No records here so far</em>
+<% END %>
+    <p> <% GET test %> </p>
+</ul>

@@ -7,6 +7,7 @@ our $VERSION = '0.1';
 
 get '/' => sub {
     template 'index';
+#    render_with_layout 'index';
 };
 
 get '/page_1' => sub {
@@ -17,8 +18,19 @@ get '/page_1' => sub {
         or croak $sth->errstr;
 
     template "base", { 
-        records => database->fetchall_arrayref,
+        records => $sth->fetchall_hashref("id"),
+        test    => "hello there!",
     };
+};
+
+get '/error' => sub {
+#    if ( session );
+    return send_error( "this is error", 401 );
+
+};
+
+get '/comment' => sub {
+    template 'comment';
 };
 
 true;
