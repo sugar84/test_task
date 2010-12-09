@@ -1,6 +1,7 @@
 <h2>Commemt</h2>
 
 <div id="comment">
+<p>Comment to page_<% comment_on %></p>
 <form action="<% comment_url %>" method=post>
     <dl>
         <dt>Username:</dt>

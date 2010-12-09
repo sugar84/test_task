@@ -18,9 +18,9 @@
 
 <ul>
     <li><a href="/">Overview</a></li>
-    <li><a href="/page_1">page_1</a></li>
-    <li><a href="/page_2">page_2</a></li>
-    <li><a href="/page_3">page_3</a></li>
+    <li><a href="/page/1">page_1</a></li>
+    <li><a href="/page/2">page_2</a></li>
+    <li><a href="/page/3">page_3</a></li>
 </ul>
 
 </div>
