@@ -5,21 +5,29 @@ use Carp;
 
 our $VERSION = '0.1';
 
-my $comment_on;
+my ($comment_on, $error_mess);
+my $number_of_pages = 3;
 
 get '/' => sub {
     template 'index';
-#    render_with_layout 'index';
 };
 
 get '/page/:id' => sub {
+    my $page_id = params->{id};
+    
+    if ($page_id !~ /\d+/ or $page_id > $number_of_pages) {
+        $error_mess = "uknown page";
+        return redirect uri_for( "/error" );
+    }
+#    elsif ($page_id \cc
+
     my $sth = database->prepare(
         'select * from books',
     );
     $sth->execute
         or croak $sth->errstr;
 
-    $comment_on = params->{id};
+    $comment_on = $page_id;
     template "base", { 
         records => $sth->fetchall_hashref("id"),
         test    => "hello there!",
@@ -27,9 +35,14 @@ get '/page/:id' => sub {
 };
 
 get '/error' => sub {
-#    if ( session );
-    return send_error( "this is error", 401 );
+    my $message = $error_mess;
+    undef $error_mess;
 
+    template 'error', {
+        message => $message,
+        url_to  => uri_for("/"),
+    };
+#    return send_error( "this is error", 401 );
 };
 
 get '/comment' => sub {
@@ -41,11 +54,5 @@ get '/comment' => sub {
         comment_on  => $to_page,
     };
 };
-
-#before_template sub {
-#    my $tokens = shift;
-#
-#    $tokens->{"comment_url"} = uri_for( "/comment" );
-#};
 
 true;
