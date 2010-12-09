@@ -1,0 +1,6 @@
+<h2>ERROR!</h2>
+
+<div id="error">
+<p><% message %></p>
+<a href="<% url_to %>">Main page</a>
+</div>
