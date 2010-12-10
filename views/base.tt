@@ -1,7 +1,31 @@
-<% IF records.size %>
-    <h2><% records.title_page %></h2>
-    <div id="page"><% records.content_page %></div>
-<% ELSE %>
-    <p>Unbelievable.  No records here so far</p>
-<% END %>
+<h2><% records.title_page %></h2>
+<div id="page"><% records.content_page %></div>
 <code><% all %></code>
+
+<div id="post_comment">
+  <hr />  
+    <a href="/comment">comment this</a>
+    <hr />  
+</div>
+
+<div id="comments">
+<% IF comments.size %>
+    <% FOREACH id IN comments.keys %>
+        <div id="comment">
+          <div id="top_c">
+            <span class="author"> <% comments.$id.username %>:</span>
+            <span class="title_c"><% comments.$id.title %></span>
+          </div>
+          <p><% comments.$id.id %></p>
+          <p><% comments.$id.parent %></p>
+          <p><% comments.$id.page_number %></p>
+          <p><% comments.$id.content %></p>
+          <div id="bottom_c">
+            <form action="<% comment_this_url %>" method=post>
+                <dd><input type=submit value="comment_this" /></dd>
+            </form>
+          </div>
+        </div>
+    <% END %>
+<% END %>
+</div>

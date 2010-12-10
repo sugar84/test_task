@@ -4,23 +4,47 @@ html, body {
     background-color: #001b1a;
 }
 
+#comment {
+    margin-bottom: 5px;
+    padding-left: 7px;
+    padding-right: 4px;
+    padding-bottom: 4px;
+    border-right: 1px dashed #222;
+    border-left: 1px dashed #222;
+    border-top: 1px dashed #222;
+    border-bottom: 1px dashed #222;
+}
+
+#top_c {
+	background-color: #f0c585;
+    
+}
+    
+
+.author {
+    padding-left: 20px;
+    font: bold 110% sans-serif;
+}
+
+
+.title_c {
+    padding-left: 100px;
+}
+
+#bottom_c {
+	background-color: #ddd;
+    
+}
 #post_comment {
 	background-color: #eee;
-    border-right: 4px solid #eee;
-    border-left: 4px solid #ffa500;
-    color: #444;
-    margin-left: 20px;
-    margin-right: 160px;
-    padding-left: 10px;
-    padding-top: 2px;
-    padding-bottom: 1px;
-    min-height: 12px;
+    border-right: 8px solid #eee;
+    border-left: 8px solid #eee;
 }
 
 
 #post_comment a {
     color: #444;
-    text-decoration: none;
+    text-decoration: underline;
     padding-left: 20px;
     display: block;
     color: #3c516e;
@@ -29,17 +53,14 @@ html, body {
 
 
 #container {
-    /* height: 500px; */
-    background: #708090;/* url('/images/dancer.png') no-repeat bottom left; */
+    background: #708090;
     min-height: 100%;
     height: auto !important;
     height: 50%;
-/*    margin: 0 auto -4em; */
 }
 
 /* page's small sheet */
 #content {
-    /* background: #fff url('/images/dancer-content-bg.png') no-repeat top right; */
 	background-color: #eee;
     border-right: 4px solid #eee;
     border-left: 4px solid #ffa500;
@@ -51,18 +72,6 @@ html, body {
     padding-bottom: 2em;
     min-height: 160px;
 }
-
-/*
-#content {
-    color: #000;
-    background-color: #eee;
-    padding: 1em;
-    margin: 1em;
-    padding-top: 0.5em;
-}
-*/
-    
-
 
 tr.even {
     background-color: #bbb
@@ -81,7 +90,6 @@ a:hover {
     right: 10px;
     margin-top: 10px;
     margin-right: 8px;
-    /*top: 50px;*/
     height: auto !important;
     height: 50%;
 }

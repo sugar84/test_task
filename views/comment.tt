@@ -3,7 +3,6 @@
 <div id="comment">
 <p>Comment to page_<% comment_on %></p>
 <form action="<% comment_url %>" method=post>
-    <dl>
         <dt>Username:</dt>
         <dd><input type=text name=username /></dd>
         <dt>Title:</dt>

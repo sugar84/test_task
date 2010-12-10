@@ -27,24 +27,41 @@ sub add_to_base {
 sub fetch_from_base {
     my ($page_id) = @_;
 
+#    my $sth = database->prepare(
+#        "SELECT comments.*, pages.* FROM (pages INNER JOIN comments ON 
+#            pages.id_page = comments.page_number) WHERE pages.id_page = $page_id"
+#    ) or croak database->errstr;
+#    $sth->execute
+#        or croak $sth->errstr;
+#
+#    my $all = $sth->fetchall_hashref("id_page");
+#    if (not values %{$all}) {
+#        $sth = database->prepare(
+#            "SELECT id_page, content_page, title_page FROM pages 
+#                WHERE id_page = $page_id") 
+#            or croak $sth->errstr;
+#        $sth->execute
+#            or croak $sth->errstr;
+#        $all = $sth->fetchall_hashref("id_page");
+#    }
     my $sth = database->prepare(
-        "SELECT comments.*, pages.* FROM (pages INNER JOIN comments ON 
-            pages.id_page = comments.page_number) WHERE pages.id_page = $page_id"
+        "SELECT id_page, title_page, content_page FROM pages 
+            WHERE id_page = $page_id"
     ) or croak database->errstr;
     $sth->execute
         or croak $sth->errstr;
+    my $page_ref = $sth->fetchrow_hashref;
 
-    my $all = $sth->fetchall_hashref("id_page");
-    if (not values %{$all}) {
-        $sth = database->prepare(
-            "SELECT id_page, content_page, title_page FROM pages 
-                WHERE id_page = $page_id") 
-            or croak $sth->errstr;
-        $sth->execute
-            or croak $sth->errstr;
-        $all = $sth->fetchall_hashref("id_page");
-    }
-    return Dumper( $all );
+    $sth= database->prepare(
+        "SELECT id, parent, page_number, content, username, title 
+            FROM comments WHERE page_number = $page_id") 
+        or croak database->errstr;
+    $sth->execute
+        or croak $sth->errstr;
+    my $comments_ref= $sth->fetchall_hashref("id");
+    my $all = { comment => $comments_ref, page => $page_ref };
+
+    return ( $all );
 }
 
 get '/' => sub {
@@ -59,16 +76,17 @@ get '/page/:id' => sub {
         return redirect uri_for( "/error" );
     }
 
-    my $all = fetch_from_base($page_id);    
+    my $all_ref = fetch_from_base($page_id);    
 
     $comment_on = $page_id;
     template "base", { 
-#        records => $sth->fetchrow_hashref,
-        all => $all,
-    }, { 
-        layout  => "main_comment"
+        records => $all_ref->{"page"},
+#        all => Dumper($all_ref->{"comment"}),
+        comments => $all_ref->{"comment"},
+
     };
 };
+
 
 get '/error' => sub {
     my $message = $error_mess;
@@ -100,10 +118,6 @@ any ["get", "post"] => '/comment' => sub {
             url_to    => uri_for("/"),
         };
     }
-#    if (not $to_page) {
-#        $error_mess = "uknown page";
-#        return redirect uri_for( "/error" );
-#    }
     
     template 'comment', {
         comment_url => uri_for("/comment"),
