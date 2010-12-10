@@ -20,15 +20,26 @@ use YAML;
 #######
 
 my $path = "./config.yml";
-my $sql  = qq(
-    CREATE TABLE comments (
-        id INT AUTO_INCREMENT NOT NULL,
-        parent INT NOT NULL,
-        page_number INT NOT NULL,
-        content VARCHAR NOT NULL,
-        username VARCHAR,
-        PRIMARY KEY (id)
-    );
+my %sql  = (
+    comments => qq(
+        CREATE TABLE IF NOT EXISTS comments (
+            id INT AUTO_INCREMENT NOT NULL,
+            parent INT NOT NULL,
+            page_number INT NOT NULL,
+            content TEXT NOT NULL,
+            username VARCHAR(15),
+            title VARCHAR(30),
+            PRIMARY KEY (id)
+        );
+    ),
+    pages => qq(
+        CREATE TABLE IF NOT EXISTS pages (
+            id_page INT NOT NULL,
+            content_page TEXT NOT NULL,
+            title_page VARCHAR(30),
+            PRIMARY KEY (id_page)
+        );
+    ),
 );
 open my $config_h, "<", $path
     or die "can't open config file: $!\n";
@@ -45,9 +56,13 @@ my $dsn = join ":", "dbi", $driver, $db;
 
 my $dbh = DBI->connect($dsn, $user, $passw) 
     or die $DBI::errstr;
-my $sth = $dbh->prepare( $sql )
-    or die $dbh->errstr;
-$sth->execute
-    or die $dbh->errtst;
+
+my $sth;
+foreach my $sql (values %sql) {
+    $sth = $dbh->prepare( $sql )
+        or die $dbh->errstr;
+    $sth->execute
+        or die $dbh->errstr;
+}
 
 print "that's ok!! \n"
