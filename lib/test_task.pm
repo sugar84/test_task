@@ -35,7 +35,15 @@ sub fetch_from_base {
         or croak $sth->errstr;
 
     my $all = $sth->fetchall_hashref("id_page");
-    return "pizdec" if not values %$all;
+    if (not values %{$all}) {
+        $sth = database->prepare(
+            "SELECT id_page, content_page, title_page FROM pages 
+                WHERE id_page = $page_id") 
+            or croak $sth->errstr;
+        $sth->execute
+            or croak $sth->errstr;
+        $all = $sth->fetchall_hashref("id_page");
+    }
     return Dumper( $all );
 }
 
