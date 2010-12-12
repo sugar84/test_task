@@ -3,3 +3,4 @@
 <p>
 I'm in <code>/home/sugar/Documents/perl/sandbox/test_task/test_task/views/index.tt</code>
 </p>
+<pre><% test %></pre>

@@ -5,10 +5,9 @@ html, body {
 }
 
 #comment {
+    margin-left: 20px;
+    margin-right: 8px;
     margin-bottom: 5px;
-    padding-left: 7px;
-    padding-right: 4px;
-    padding-bottom: 4px;
     border-right: 1px dashed #222;
     border-left: 1px dashed #222;
     border-top: 1px dashed #222;
@@ -21,7 +20,7 @@ html, body {
 }
     
 
-.author {
+.author_c {
     padding-left: 20px;
     font: bold 110% sans-serif;
 }
@@ -36,9 +35,10 @@ html, body {
     
 }
 #post_comment {
-	background-color: #eee;
-    border-right: 8px solid #eee;
-    border-left: 8px solid #eee;
+	background-color: #ddd;
+    padding: 10px
+    margin-bottom: 5px;
+    border-right: 4px solid #eee;
 }
 
 

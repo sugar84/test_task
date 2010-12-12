@@ -3,29 +3,34 @@
 <code><% all %></code>
 
 <div id="post_comment">
-  <hr />  
-    <a href="/comment">comment this</a>
-    <hr />  
+  <form action="<% path %>" method=post>
+    <input type="hidden" name="comment_to" value="0"></input>
+    <input type="hidden" name="what_comment" value="page"></input>
+    <input type="hidden" name="page_title" value="<% page_title %>"></input>
+    <dd><input type="submit" value="comment_page" /></dd>
+  </form>
 </div>
 
 <div id="comments">
 <% IF comments.size %>
-    <% FOREACH id IN comments.keys %>
-        <div id="comment">
-          <div id="top_c">
-            <span class="author"> <% comments.$id.username %>:</span>
-            <span class="title_c"><% comments.$id.title %></span>
-          </div>
-          <p><% comments.$id.id %></p>
-          <p><% comments.$id.parent %></p>
-          <p><% comments.$id.page_number %></p>
-          <p><% comments.$id.content %></p>
-          <div id="bottom_c">
-            <form action="<% comment_this_url %>" method=post>
-                <dd><input type=submit value="comment_this" /></dd>
-            </form>
-          </div>
-        </div>
-    <% END %>
+  <% FOREACH id IN comments.keys %>
+    <div id="comment">
+      <div id="top_c">
+        <span class="author_c"> <% comments.$id.username %>:</span>
+        <span class="title_c"><% comments.$id.title %></span>
+      </div>
+      <p><% comments.$id.parent %></p>
+      <p><% comments.$id.page_number %></p>
+      <p><% comments.$id.content %></p>
+      <div id="bottom_c">
+         <form action="<% path %>" method=post>
+           <input type="hidden" name="comment_to" value="<% comments.$id.id %>"></input>
+           <input type="hidden" name="what_comment" value="comment"></input>
+           <input type="hidden" name="to_author" value="<% comments.$id.username %>"></input>
+           <dd><input type="submit" value="comment_this" /></dd>
+          </form>
+      </div>
+    </div>
+  <% END %>
 <% END %>
 </div>

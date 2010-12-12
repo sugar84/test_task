@@ -6,7 +6,7 @@ use Carp;
 
 our $VERSION = '0.2';
 
-my ($comment_on, $error_mess, $page);
+my ($error_mess, $page);
 my $number_of_pages = 3;
 
 sub add_to_base {
@@ -27,7 +27,9 @@ sub add_to_base {
 sub fetch_from_base {
     my ($page_id) = @_;
 
-#    my $sth = database->prepare(
+## alternative work with DB
+#
+#   my $sth = database->prepare(
 #        "SELECT comments.*, pages.* FROM (pages INNER JOIN comments ON 
 #            pages.id_page = comments.page_number) WHERE pages.id_page = $page_id"
 #    ) or croak database->errstr;
@@ -52,16 +54,17 @@ sub fetch_from_base {
         or croak $sth->errstr;
     my $page_ref = $sth->fetchrow_hashref;
 
-    $sth= database->prepare(
+    $sth = database->prepare(
         "SELECT id, parent, page_number, content, username, title 
-            FROM comments WHERE page_number = $page_id") 
-        or croak database->errstr;
+            FROM comments WHERE page_number = $page_id"
+    ) or croak database->errstr;
     $sth->execute
         or croak $sth->errstr;
     my $comments_ref= $sth->fetchall_hashref("id");
-    my $all = { comment => $comments_ref, page => $page_ref };
 
-    return ( $all );
+    my $all_ref = { comment => $comments_ref, page => $page_ref };
+
+    return ( $all_ref );
 }
 
 get '/' => sub {
@@ -70,58 +73,80 @@ get '/' => sub {
 
 get '/page/:id' => sub {
     my $page_id = params->{id};
-    
+
     if ($page_id !~ /\d+/ or $page_id > $number_of_pages) {
-        $error_mess = "page doesn't exist";
+        session( err_message => "page doesn't exist" );
         return redirect uri_for( "/error" );
     }
 
-    my $all_ref = fetch_from_base($page_id);    
+    my $content_ref = fetch_from_base($page_id);
+    my $page_title  = $content_ref->{"page"}{"title_page"};
 
-    $comment_on = $page_id;
     template "base", { 
-        records => $all_ref->{"page"},
-#        all => Dumper($all_ref->{"comment"}),
-        comments => $all_ref->{"comment"},
-
+        records    => $content_ref->{"page"},
+        page_title => $page_title,
+        comments   => $content_ref->{"comment"},
+        path       => request->path,
     };
 };
 
+post '/page/:id' => sub{
+    session( comment_page    => params->{"id"} );
+    session( comment_to      => params->{"comment_to"} );
+    session( page_title      => params->{"page_title"} );
+    session( to_author       => params->{"to_author"} );
+    session( what_comment    => params->{"what_comment"} );
+
+    redirect uri_for("/comment");
+};
 
 get '/error' => sub {
-    my $message = $error_mess;
-    undef $error_mess;
+    my $err_message = session("err_message");
+    session( err_message => undef );
 
     template 'error', {
-        message => $message,
+        message => $err_message,
         url_to  => uri_for("/"),
     };
 };
 
-any ["get", "post"] => '/comment' => sub {
-    my $to_page = $comment_on;
-
-    if (request->method() eq "POST") {
-        my %params = (
-            title    => params->{"title"},
-            username => params->{"username"},
-            content  => params->{"text"},
-            page     => $comment_on,
-            parent   => 0
-        );
-        my $res = add_to_base( \%params );
-        undef $comment_on;
-        return template "posted", {
-            title     => $res,
-            username  => params->{"username"},
-            text      => params->{"text"},
-            url_to    => uri_for("/"),
-        };
+get '/comment' => sub {
+    my $comment_mess;
+    if ( session("what_comment") eq "page") {
+        $comment_mess = "You comment page '" . session("page_title") . "'";
     }
-    
+    elsif ( session("what_comment") eq "comment" ) {
+        $comment_mess = "You comment message of " . session("to_author");
+    }
+    session( what_comment => undef );
+
     template 'comment', {
-        comment_url => uri_for("/comment"),
-        comment_on  => $to_page,
+        comment_mess => $comment_mess, 
+        comment_to   => session("comment_to"),
+        comment_page => session("comment_page"),
+        comment_url  => uri_for("/comment"),
+    };
+};
+
+post "/comment" => sub {
+    my %params = (
+        title    => params->{"title"},
+        username => params->{"username"},
+        content  => params->{"text"},
+        page     => session("comment_page"),
+        parent   => session("comment_to"),
+    );
+        
+    my $res = add_to_base( \%params );
+    
+    session( comment_page => undef );
+    session( comment_to   => undef );
+        
+    return template "posted", {
+        title     => $res,
+        username  => params->{"username"},
+        text      => params->{"text"},
+        url_to    => uri_for("/"),
     };
 };
 

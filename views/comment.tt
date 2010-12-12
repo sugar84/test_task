@@ -1,13 +1,16 @@
 <h2>Commemt</h2>
 
 <div id="comment">
-<p>Comment to page_<% comment_on %></p>
+<p><% comment_mess %></p>
 <form action="<% comment_url %>" method=post>
         <dt>Username:</dt>
-        <dd><input type=text name=username /></dd>
+        <dd><input type=text value=anonym name=username /></dd>
         <dt>Title:</dt>
         <dd><input type=text name=title /></dd>
         <dt>Comment:</dt>
         <dd><textarea name=text rows=5 cols=40></textarea></dd>
         <dd><input type=submit value=comment /></dd>
 </div>
+<p><% comment_page %></p>
+<p><% path %></p>
+<p><% comment_to %></p>
