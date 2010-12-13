@@ -4,18 +4,24 @@ html, body {
     background-color: #001b1a;
 }
 
+#comments {
+    margin-right: 8px;
+
+}
+
 #comment {
     margin-left: 20px;
-    margin-right: 8px;
     margin-bottom: 5px;
-    border-right: 1px dashed #222;
     border-left: 1px dashed #222;
+/*    border-right: 1px dashed #222;
     border-top: 1px dashed #222;
     border-bottom: 1px dashed #222;
+*/
 }
 
 #top_c {
 	background-color: #f0c585;
+    padding: 2px; 
     
 }
     
@@ -32,11 +38,13 @@ html, body {
 
 #bottom_c {
 	background-color: #ddd;
+    padding: 2px; 
+    margin-bottom: 5px;
     
 }
 #post_comment {
 	background-color: #ddd;
-    padding: 10px
+    padding: 3px; 
     margin-bottom: 5px;
     border-right: 4px solid #eee;
 }
