@@ -11,7 +11,7 @@
   </form>
 </div>
 
-<% SET incr = 3 %> 
+<%# SET incr = 3 %> 
 <div id="comments">
 <% IF comments.size %>
   <% FOREACH id IN comments.keys %>
@@ -24,12 +24,12 @@
 </div>
 
 <% BLOCK comment_bl %>
-    <% incr = incr - 1; %>
+    <%# incr = incr - 1; %>
       <div id="top_c">
         <span class="author_c"> <% comm.username %>:</span>
         <span class="title_c"><% comm.title %></span>
       </div>
-      <p><% incr %></p>
+      <p><%# incr %></p>
       <p><% comm.page_number %></p>
       <p><% comm.content %></p>
       <div id="bottom_c">
@@ -41,9 +41,9 @@
           </form>
       </div>
       <div id="comment" %>
-      <% IF incr != 0 %>
-        <% PROCESS comment_bl %>
-      <% END %>
+      <%# IF incr != 0 %>
+        <%# PROCESS comment_bl %>
+      <%# END %>
       </div>
 
 <% END %>

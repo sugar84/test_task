@@ -26,6 +26,7 @@ sub add_to_base {
 
 sub fetch_from_base {
     my ($page_id) = @_;
+    my (%data);
 
 ## alternative work with DB
 #
@@ -50,21 +51,21 @@ sub fetch_from_base {
         "SELECT id_page, title_page, content_page FROM pages 
             WHERE id_page = $page_id"
     ) or croak database->errstr;
+    
     $sth->execute
         or croak $sth->errstr;
-    my $page_ref = $sth->fetchrow_hashref;
+    $data{"page"} = $sth->fetchrow_hashref;
 
     $sth = database->prepare(
         "SELECT id, parent, page_number, content, username, title 
             FROM comments WHERE page_number = $page_id"
     ) or croak database->errstr;
+    
     $sth->execute
         or croak $sth->errstr;
-    my $comments_ref= $sth->fetchall_hashref("id");
+    $data{"comment"} = $sth->fetchall_hashref("id");
 
-    my $all_ref = { comment => $comments_ref, page => $page_ref };
-
-    return ( $all_ref );
+    return ( \%data );
 }
 
 get '/' => sub {
