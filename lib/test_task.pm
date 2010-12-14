@@ -9,6 +9,10 @@ our $VERSION = '0.2';
 my ($error_mess, $page);
 my $number_of_pages = 3;
 
+##
+## Subroutins
+##
+
 sub add_to_base {
     my ($row_ref) = @_;
     
@@ -67,6 +71,29 @@ sub fetch_from_base {
 
     return ( \%data );
 }
+
+# transform plain hash data structure of comments to recursive representation
+sub trans_data_struct {
+    my ($recs_ref) = @_;
+    
+    my @top_level;
+    foreach my $key (sort {$a <=> $b} keys %$recs_ref) {
+        my $parent = $recs_ref->{$key}{"parent"} ;
+        
+        if ($parent == 0) {
+            push @top_level, $recs_ref->{$key};
+        }
+        else {
+            push @{ $recs_ref->{$parent}{"child"} }, $recs_ref->{$key};
+        }
+    }
+
+    return( \@top_level);
+}
+
+##
+## Routes
+##
 
 get '/' => sub {
     template 'index';
