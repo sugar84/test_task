@@ -6,7 +6,7 @@
         <dt>Username:</dt>
         <dd><input type=text value=anonym name=username /></dd>
         <dt>Title:</dt>
-        <dd><input type=text name=title /></dd>
+        <dd><input type=text value="<% comment_title %>" name=title /></dd>
         <dt>Comment:</dt>
         <dd><textarea name=text rows=5 cols=40></textarea></dd>
         <dd><input type=submit value=comment /></dd>

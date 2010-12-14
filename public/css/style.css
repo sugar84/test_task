@@ -10,9 +10,9 @@ html, body {
 }
 
 #comment {
-    margin-left: 20px;
-    margin-bottom: 5px;
-    border-left: 1px dashed #222;
+    margin-left: 25px;
+    margin-bottom: 9px;
+    border-left: 1px dashed #ccc;
 /*    border-right: 1px dashed #222;
     border-top: 1px dashed #222;
     border-bottom: 1px dashed #222;
@@ -20,7 +20,7 @@ html, body {
 }
 
 #top_c {
-	background-color: #f0c585;
+	background-color: #e5deb7;
     padding: 2px; 
     
 }

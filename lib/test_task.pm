@@ -6,8 +6,9 @@ use Carp;
 
 our $VERSION = '0.2';
 
-my ($error_mess, $page);
+## Config
 my $number_of_pages = 3;
+# in real app it will be taken from db
 
 ##
 ## Subroutins
@@ -30,9 +31,9 @@ sub add_to_base {
 
 sub fetch_from_base {
     my ($page_id) = @_;
-    my (%data);
 
 ## alternative work with DB
+## (it's needed to be rewritten and additional operations with hashes)
 #
 #   my $sth = database->prepare(
 #        "SELECT comments.*, pages.* FROM (pages INNER JOIN comments ON 
@@ -51,6 +52,8 @@ sub fetch_from_base {
 #            or croak $sth->errstr;
 #        $all = $sth->fetchall_hashref("id_page");
 #    }
+    my (%data);
+
     my $sth = database->prepare(
         "SELECT id_page, title_page, content_page FROM pages 
             WHERE id_page = $page_id"
@@ -67,13 +70,13 @@ sub fetch_from_base {
     
     $sth->execute
         or croak $sth->errstr;
-    $data{"comment"} = $sth->fetchall_hashref("id");
+    $data{"comment_hash"} = $sth->fetchall_hashref("id");
 
     return ( \%data );
 }
 
 # transform plain hash data structure of comments to recursive representation
-sub trans_data_struct {
+sub trans_comments_struct {
     my ($recs_ref) = @_;
     
     my @top_level;
@@ -88,57 +91,60 @@ sub trans_data_struct {
         }
     }
 
-    return( \@top_level);
+    return( \@top_level );
 }
 
 ##
 ## Routes
 ##
 
-get '/' => sub {
-    template 'index';
+get "/" => sub {
+    template "index";
 };
 
-get '/page/:id' => sub {
+get "/page/:id" => sub {
     my $page_id = params->{id};
 
-    if ($page_id !~ /\d+/ or $page_id > $number_of_pages) {
+    if ($page_id !~ /^\d+$/ or $page_id > $number_of_pages) {
         session( err_message => "page doesn't exist" );
         return redirect uri_for( "/error" );
     }
 
     my $content_ref = fetch_from_base($page_id);
+    $content_ref->{"comment_arr"} = trans_comments_struct( 
+        $content_ref->{"comment_hash"} 
+    );
     my $page_title  = $content_ref->{"page"}{"title_page"};
 
     template "base", { 
         records    => $content_ref->{"page"},
         page_title => $page_title,
-        comments   => $content_ref->{"comment"},
+        comments   => $content_ref->{"comment_arr"},
         path       => request->path,
     };
 };
 
-post '/page/:id' => sub{
+post "/page/:id" => sub{
     session( comment_page    => params->{"id"} );
     session( comment_to      => params->{"comment_to"} );
-    session( page_title      => params->{"page_title"} );
+    session( comment_title   => params->{"comment_title"} );
     session( to_author       => params->{"to_author"} );
     session( what_comment    => params->{"what_comment"} );
 
-    redirect uri_for("/comment");
+    redirect uri_for( "/comment" );
 };
 
-get '/error' => sub {
+get "/error" => sub {
     my $err_message = session("err_message");
     session( err_message => undef );
 
-    template 'error', {
+    template "error", {
         message => $err_message,
         url_to  => uri_for("/"),
     };
 };
 
-get '/comment' => sub {
+get "/comment" => sub {
     my $comment_mess;
     if ( session("what_comment") eq "page") {
         $comment_mess = "You comment page '" . session("page_title") . "'";
@@ -148,11 +154,12 @@ get '/comment' => sub {
     }
     session( what_comment => undef );
 
-    template 'comment', {
-        comment_mess => $comment_mess, 
-        comment_to   => session("comment_to"),
-        comment_page => session("comment_page"),
-        comment_url  => uri_for("/comment"),
+    template "comment", {
+        comment_mess  => $comment_mess, 
+        comment_to    => session("comment_to"),
+        comment_page  => session("comment_page"),
+        comment_title => session("comment_title"),
+        comment_url   => uri_for("/comment"),
     };
 };
 

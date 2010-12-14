@@ -1,49 +1,51 @@
 <h2><% records.title_page %></h2>
 <div id="page"><% records.content_page %></div>
-<code><% all %></code>
 
 <div id="post_comment">
   <form action="<% path %>" method=post>
     <input type="hidden" name="comment_to" value="0"></input>
     <input type="hidden" name="what_comment" value="page"></input>
-    <input type="hidden" name="page_title" value="<% page_title %>"></input>
+    <input type="hidden" name="comment_title" value="<% page_title %>"></input>
     <dd><input type="submit" value="comment_page" /></dd>
   </form>
 </div>
 
-<%# SET incr = 3 %> 
 <div id="comments">
 <% IF comments.size %>
-  <% FOREACH id IN comments.keys %>
-    <% SET comm = comments.$id %>
+  <% FOREACH id IN comments.list %>
+    <% SET comm = id %>
     <div id="comment">
-      <% INCLUDE comment_bl %>
+      <% INCLUDE comment_block %>
     </div>
   <% END %>
 <% END %>
 </div>
 
-<% BLOCK comment_bl %>
-    <%# incr = incr - 1; %>
-      <div id="top_c">
-        <span class="author_c"> <% comm.username %>:</span>
-        <span class="title_c"><% comm.title %></span>
+<% BLOCK comment_block %>
+
+  <div id="top_c">
+    <span class="author_c"> <% comm.username %>:</span>
+    <span class="title_c"><% comm.title %></span>
+  </div>
+  
+  <p><% comm.content %></p>
+  <div id="bottom_c">
+    <form action="<% path %>" method=post>
+      <input type="hidden" name="comment_to" value="<% comm.id %>"></input>
+      <input type="hidden" name="what_comment" value="comment"></input>
+      <input type="hidden" name="to_author" value="<% comm.username %>"></input>
+      <input type="hidden" name="comment_title" value="<% comm.title %>"></input>
+      <dd><input type="submit" value="comment_this" /></dd>
+    </form>
+  </div>
+      
+  <% IF comm.child.size %>
+    <% FOREACH child_com = comm.child %>
+      <% SET comm = child_com %>
+      <div id="comment">
+        <% INCLUDE comment_block %>
       </div>
-      <p><%# incr %></p>
-      <p><% comm.page_number %></p>
-      <p><% comm.content %></p>
-      <div id="bottom_c">
-         <form action="<% path %>" method=post>
-           <input type="hidden" name="comment_to" value="<% comm.id %>"></input>
-           <input type="hidden" name="what_comment" value="comment"></input>
-           <input type="hidden" name="to_author" value="<% comm.username %>"></input>
-           <dd><input type="submit" value="comment_this" /></dd>
-          </form>
-      </div>
-      <div id="comment" %>
-      <%# IF incr != 0 %>
-        <%# PROCESS comment_bl %>
-      <%# END %>
-      </div>
+    <% END %>
+  <% END %>
 
 <% END %>
