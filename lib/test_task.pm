@@ -7,13 +7,14 @@ use Carp;
 our $VERSION = '0.2';
 
 ## Config
-my $number_of_pages = 3;
+set number_of_pages => 3;
 # in real app it will be taken from db
 
 ##
 ## Subroutins
 ##
 
+# insert into database posted comment
 sub add_to_base {
     my ($row_ref) = @_;
     
@@ -29,6 +30,7 @@ sub add_to_base {
     return "that's ok";
 }
 
+# fetch from database requested content
 sub fetch_from_base {
     my ($page_id) = @_;
 
@@ -94,6 +96,10 @@ sub trans_comments_struct {
     return( \@top_level );
 }
 
+## Hooks
+
+# section for hooks after, before and before_template
+
 ##
 ## Routes
 ##
@@ -105,11 +111,13 @@ get "/" => sub {
 get "/page/:id" => sub {
     my $page_id = params->{id};
 
-    if ($page_id !~ /^\d+$/ or $page_id > $number_of_pages) {
+    # handle the undefined pages
+    if ( $page_id !~ /^\d+$/ or $page_id > setting("number_of_pages") ) {
         session( err_message => "page doesn't exist" );
         return redirect uri_for( "/error" );
     }
 
+    # get data from base, and tranform it to needed structure
     my $content_ref = fetch_from_base($page_id);
     $content_ref->{"comment_arr"} = trans_comments_struct( 
         $content_ref->{"comment_hash"} 
@@ -124,7 +132,8 @@ get "/page/:id" => sub {
     };
 };
 
-post "/page/:id" => sub{
+post "/page/:id" => sub {
+    # take params for next using it in posting
     session( comment_page    => params->{"id"} );
     session( comment_to      => params->{"comment_to"} );
     session( comment_title   => params->{"comment_title"} );
@@ -135,6 +144,7 @@ post "/page/:id" => sub{
 };
 
 get "/error" => sub {
+    # recieve error message form route handler
     my $err_message = session("err_message");
     session( err_message => undef );
 
@@ -146,13 +156,14 @@ get "/error" => sub {
 
 get "/comment" => sub {
     my $comment_mess;
+    
+    # check what is user comments for: page or another comment
     if ( session("what_comment") eq "page") {
-        $comment_mess = "You comment page '" . session("page_title") . "'";
+        $comment_mess = "You comment page '" . session("comment_title") . "'";
     }
     elsif ( session("what_comment") eq "comment" ) {
         $comment_mess = "You comment message of " . session("to_author");
     }
-    session( what_comment => undef );
 
     template "comment", {
         comment_mess  => $comment_mess, 
@@ -164,6 +175,7 @@ get "/comment" => sub {
 };
 
 post "/comment" => sub {
+    # set params translte them later to row and insert it into the base
     my %params = (
         title    => params->{"title"},
         username => params->{"username"},
@@ -171,17 +183,19 @@ post "/comment" => sub {
         page     => session("comment_page"),
         parent   => session("comment_to"),
     );
+    # translate \n to <br />
+    $params{"content"} =~ s|\n|<br />|g;
         
     my $res = add_to_base( \%params );
     
+    session( what_comment => undef );
     session( comment_page => undef );
     session( comment_to   => undef );
         
-    return template "posted", {
-        title     => $res,
-        username  => params->{"username"},
-        text      => params->{"text"},
-        url_to    => uri_for("/"),
+    template "posted", {
+        title       => $res,
+        username    => params->{"username"},
+        url_to      => uri_for("/"),
     };
 };
 

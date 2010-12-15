@@ -1,0 +1,27 @@
+To run app test_task you need:
+ - install Dancer;
+ - install Dancer related modules:
+   - HTTP::Server::Simple::PSGI
+   - HTTP::Body
+   - HTTP::Types
+   - URI
+ - install app related modules:
+   - YAML
+   - Template (and Template Toolkit too)
+   - Dancer::Plugin::Database (if not installed)
+   - DBI (if not installed)
+ - take sources of the app
+ - cd app/dir and run:
+   - tool/db_helper.pl 
+     (it creates db schema)
+   - tool/insert_into_db.pl
+     (it inserts content into table 'pages')
+
+Default configuration - 'development', if you have to change it to production,
+enter into config.yml and replace value "development" of parameter "environment"
+with parameter "production".
+
+If want you "auto_reload" option to be enabled, install modules Module::Refresh 
+and Clone.
+
+If you want some questions email me to sugar.61rus@gmail.com

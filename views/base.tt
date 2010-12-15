@@ -28,7 +28,9 @@
     <span class="title_c"><% comm.title %></span>
   </div>
   
-  <p><% comm.content %></p>
+  <div id="body_c">
+    <% comm.content %>
+  </div>
   <div id="bottom_c">
     <form action="<% path %>" method=post>
       <input type="hidden" name="comment_to" value="<% comm.id %>"></input>

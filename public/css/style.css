@@ -4,27 +4,68 @@ html, body {
     background-color: #001b1a;
 }
 
+h1 {
+    color: #ffa500;
+}
+
+hr {
+    color: #A6A6A6
+    height: 0px;
+    border-style: solid;
+    border-width: 1px 0 0;
+    clear: both;
+}
+
+/* sheet of content, menu, side bars */
+#container {
+    border-right: 3px solid #ffa500;
+    background: #708090;
+    min-height: 100%;
+    height: auto !important;
+    height: 50%;
+}
+
+/* page's small sheet */
+#content {
+	background-color: #eee;
+    border-right: 3px solid #666;
+    border-left: 4px solid #ffa500;
+    border-bottom: 3px solid #666;
+    color: #444;
+    margin-left: 20px;
+    margin-right: 160px;
+    padding-left: 10px;
+    padding-top: 8px;
+    padding-bottom: 2em;
+    min-height: 160px;
+}
+
+/* style of "comment to page" section */
+#post_comment {
+	background-color: #ddd;
+    padding: 3px; 
+    margin-bottom: 17px;
+    border-right: 4px solid #eee;
+}
+
+
+/* margin for all comments */
 #comments {
     margin-right: 8px;
 
 }
 
+/* styles of each comment on the page */
 #comment {
     margin-left: 25px;
-    margin-bottom: 9px;
+    margin-top: 8px;
     border-left: 1px dashed #ccc;
-/*    border-right: 1px dashed #222;
-    border-top: 1px dashed #222;
-    border-bottom: 1px dashed #222;
-*/
 }
 
 #top_c {
 	background-color: #e5deb7;
     padding: 2px; 
-    
 }
-    
 
 .author_c {
     padding-left: 20px;
@@ -36,53 +77,18 @@ html, body {
     padding-left: 100px;
 }
 
+#body_c {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
 #bottom_c {
 	background-color: #ddd;
     padding: 2px; 
     margin-bottom: 5px;
     
-}
-#post_comment {
-	background-color: #ddd;
-    padding: 3px; 
-    margin-bottom: 5px;
-    border-right: 4px solid #eee;
-}
-
-
-#post_comment a {
-    color: #444;
-    text-decoration: underline;
-    padding-left: 20px;
-    display: block;
-    color: #3c516e;
-    width: 110px;
-}
-
-
-#container {
-    background: #708090;
-    min-height: 100%;
-    height: auto !important;
-    height: 50%;
-}
-
-/* page's small sheet */
-#content {
-	background-color: #eee;
-    border-right: 4px solid #eee;
-    border-left: 4px solid #ffa500;
-    color: #444;
-    margin-left: 20px;
-    margin-right: 160px;
-    padding-left: 10px;
-    padding-top: 8px;
-    padding-bottom: 2em;
-    min-height: 160px;
-}
-
-tr.even {
-    background-color: #bbb
 }
 
 a {
@@ -134,8 +140,10 @@ a:hover {
     border-top:2px solid #3c516e;
     border-bottom:2px solid #3c615e;
     padding-left: 4px;
-    margin-right: 5px;
     padding-right: 8px;
+    padding-bottom: 1px;
+    padding-top: 1px;
+    margin-right: 5px;
     background-color: #eee;
     font-size:20px;
     letter-spacing:1px;
@@ -143,31 +151,16 @@ a:hover {
     text-transform:uppercase;
 }
 
-/* I do not know about next two params */
-#menu div a {
-    color: #eee;
-}
-
 #menu div {
-font-family: sans-serif;
+    font-family: sans-serif;
     color: #ddd;
     margin: 1em;
-}
-
-h1 {
-    color: #ffa500;
-}
-
-#footer {
-    height: 28px;
 }
 
 /* k.o. says that is the style of the footer */
 #footer {
     background: #708090;
-    border-top: 3px solid #666;
-
-/*  margin-top: 100px; */
+    border-right: 3px solid #ffa500;
     padding-top: 2px;
 
     font-family:sans-serif;
@@ -180,14 +173,11 @@ h1 {
     color: #99b;
 }
 
+#footer {
+    height: 28px;
+}
+
 pre {
     font-family: \"lucida console\",\"monaco\",\"andale mono\",\"bitstream vera sans mono\",\"consolas\",monospace;
 }
 
-hr {
-    color: #A6A6A6
-    height: 0px;
-    border-style: solid;
-    border-width: 1px 0 0;
-    clear: both;
-}

@@ -3,7 +3,7 @@ use strict;
 use warnings;
 
 use DBI;
-use YAML;
+use YAML qw(Load);
 
 #######
 # Description

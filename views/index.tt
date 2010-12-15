@@ -1,6 +1,16 @@
-<h2>It Works!</h2>
+<h2>Hello</h2>
 
 <p>
-I'm in <code>/home/sugar/Documents/perl/sandbox/test_task/test_task/views/index.tt</code>
+Hello, this is simple tree-typed comments application.
 </p>
-<pre><% test %></pre>
+<p>
+It was made in Perl and Dancer. And it is not ready for production.
+I think it is more studying app than effecient working of a box application.
+If you think that this is usefull for you let me know about it, and I'll try to update the app to more useable version.
+</p>
+<p>
+And the app contains several bugs. I know about it.
+</p>
+
+<a href="https://github.com/sugar84/test_task">Github repo</a>
+

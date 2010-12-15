@@ -3,7 +3,7 @@ use strict;
 use warnings;
 
 use DBI;
-use YAML;
+use YAML qw(Load);
 
 my $path = "./config.yml";
 my $sql = qq(
@@ -46,7 +46,7 @@ my @contents = (
         <p>Hello 8 bandit, he says </p>
         <p>Hello the Hedgehog, 8 bandit says </p>
         <p>---</p>
-        <p>I said, that boring story and I stop talking it</p>
+        <p>I said, that this is boring story and I stop talking it</p>
         <p>that's all</p>
     ), ],
 );
