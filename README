@@ -1,4 +1,4 @@
-To run app test_task you need:
+  To run app test_task you need:
  - install Dancer;
  - install Dancer related modules:
    - HTTP::Server::Simple::PSGI
@@ -13,15 +13,22 @@ To run app test_task you need:
  - take sources of the app
  - cd app/dir and run:
    - tool/db_helper.pl 
-     (it creates db schema)
+     (it creates db schema, it's needed to be ran from root dir of app)
    - tool/insert_into_db.pl
      (it inserts content into table 'pages')
 
-Default configuration - 'development', if you have to change it to production,
+  Default configuration - 'development', if you have to change it to production,
 enter into config.yml and replace value "development" of parameter "environment"
 with parameter "production".
 
-If want you "auto_reload" option to be enabled, install modules Module::Refresh 
+  When you have installed all related modules simply run 
+from the root dir of the application:
+
+  ./test_task.pl
+
+  And app will be ran and will listen *:3000 port.
+
+  If want you "auto_reload" option to be enabled, install modules Module::Refresh 
 and Clone.
 
-If you want some questions email me to sugar.61rus@gmail.com
+  If you want ask ome questions: email me to sugar.61rus@gmail.com
