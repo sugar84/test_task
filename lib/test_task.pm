@@ -158,11 +158,16 @@ get "/comment" => sub {
     my $comment_mess;
     
     # check what is user comments for: page or another comment
-    if ( session("what_comment") eq "page") {
-        $comment_mess = "You comment page '" . session("comment_title") . "'";
+    if (defined session("what_comment")) {
+        if ( session("what_comment") eq "page") {
+            $comment_mess = "You comment page '" . session("comment_title") . "'";
+        }
+        elsif ( session("what_comment") eq "comment" ) {
+            $comment_mess = "You comment message of " . session("to_author");
+        }
     }
-    elsif ( session("what_comment") eq "comment" ) {
-        $comment_mess = "You comment message of " . session("to_author");
+    else {
+        return redirect uri_for("/");
     }
 
     template "comment", {
@@ -170,7 +175,7 @@ get "/comment" => sub {
         comment_to    => session("comment_to"),
         comment_page  => session("comment_page"),
         comment_title => session("comment_title"),
-        comment_url   => uri_for("/comment"),
+        to_url        => uri_for("/"),
     };
 };
 
