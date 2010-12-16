@@ -1,5 +1,5 @@
 <h2>Comment is posted</h2>
 
 <p><% username %>! Your comment is succefully posted</p>
-<p>Status message is: <% title %></p>
-<a href="<% uri_to%>">main_page</a>
+<p>Status message is: <% status %></p>
+<a href="<% url_to %>">Return to the page</a>

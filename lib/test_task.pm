@@ -128,17 +128,18 @@ get "/page/:id" => sub {
         records    => $content_ref->{"page"},
         page_title => $page_title,
         comments   => $content_ref->{"comment_arr"},
-        path       => request->path,
+        path       => uri_for( request->path ),
     };
 };
 
 post "/page/:id" => sub {
     # take params for next using it in posting
-    session( comment_page    => params->{"id"} );
-    session( comment_to      => params->{"comment_to"} );
-    session( comment_title   => params->{"comment_title"} );
-    session( to_author       => params->{"to_author"} );
-    session( what_comment    => params->{"what_comment"} );
+    session( comment_page  => params->{"id"} );
+    session( comment_to    => params->{"comment_to"} );
+    session( comment_title => params->{"comment_title"} );
+    session( to_author     => params->{"to_author"} );
+    session( what_comment  => params->{"what_comment"} );
+    session( req_path      => params->{"request_path"} );
 
     redirect uri_for( "/comment" );
 };
@@ -175,7 +176,7 @@ get "/comment" => sub {
         comment_to    => session("comment_to"),
         comment_page  => session("comment_page"),
         comment_title => session("comment_title"),
-        to_url        => uri_for("/"),
+        to_url        => uri_for("/")
     };
 };
 
@@ -190,17 +191,20 @@ post "/comment" => sub {
     );
     # translate \n to <br />
     $params{"content"} =~ s|\n|<br />|g;
+    
+    my $return_path    = session("req_path");
         
     my $res = add_to_base( \%params );
     
     session( what_comment => undef );
+    session( req_path     => undef );
     session( comment_page => undef );
     session( comment_to   => undef );
         
     template "posted", {
-        title       => $res,
+        status      => $res,
         username    => params->{"username"},
-        url_to      => uri_for("/"),
+        url_to      => "$return_path",
     };
 };
 

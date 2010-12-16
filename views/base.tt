@@ -1,10 +1,12 @@
 <h2><% records.title_page %></h2>
 <div id="page"><% records.content_page %></div>
+<p><% Dumper %></p>
 
 <div id="post_comment">
   <form action="<% path %>" method=post>
     <input type="hidden" name="comment_to" value="0"></input>
     <input type="hidden" name="what_comment" value="page"></input>
+    <input type="hidden" name="request_path" value="<% path %>"></input>
     <input type="hidden" name="comment_title" value="<% page_title %>"></input>
     <dd><input type="submit" value="comment_page" /></dd>
   </form>
@@ -35,6 +37,7 @@
     <form action="<% path %>" method=post>
       <input type="hidden" name="comment_to" value="<% comm.id %>"></input>
       <input type="hidden" name="what_comment" value="comment"></input>
+      <input type="hidden" name="request_path" value="<% path %>"></input>
       <input type="hidden" name="to_author" value="<% comm.username %>"></input>
       <input type="hidden" name="comment_title" value="<% comm.title %>"></input>
       <dd><input type="submit" value="comment_this" /></dd>
